@@ -1,16 +1,76 @@
 import '@reach/dialog/styles.css';
+import 'bootstrap/dist/css/bootstrap-reboot.css';
 import React from 'react';
+import styled from '@emotion/styled';
+import VisuallyHidden from '@reach/visually-hidden';
 import { Dialog } from '@reach/dialog';
 import Logo from 'components/Logo';
+import Button from 'components/Button';
+import * as colors from 'styles';
 
 type FormDataType = { username: string, password: string };
 
 interface Props {
+  variant?: "primary" | "secondary";
   buttonText: string;
   onSubmit: ({ username, password }: FormDataType) => void;
 }
 
-const LoginForm = ({ buttonText, onSubmit }: Props) => {
+const AppStyled = styled.div({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: '100%',
+  height: '100vh',
+});
+
+const Content = styled.div({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+  gridGap: '0.75rem',
+});
+
+const Form = styled.form({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'stretch',
+  '> div': {
+    margin: '10px auto',
+    width: '100%',
+    maxWidth: '300px',
+  },
+});
+
+const inputStyles = {
+  border: '1px solid #f1f1f4',
+  background: '#f1f2f7',
+  padding: '8px 12px',
+};
+
+const Input = styled.input({ borderRadius: '3px' }, inputStyles);
+
+const FormGroup = styled.div({
+  display: 'flex',
+  flexDirection: 'column',
+});
+
+const CircleButton = styled.button({
+  borderRadius: '30px',
+  padding: '0',
+  width: '40px',
+  height: '40px',
+  lineHeight: '1',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  background: colors.base,
+  color: colors.text,
+  border: `1px solid ${colors.gray10}`,
+  cursor: 'pointer',
+});
+
+const LoginForm = ({ variant, buttonText, onSubmit }: Props) => {
   const handleSubmit = (event: any) => {
     event.preventDefault();
     const { username, password } = event.target.elements;
@@ -22,19 +82,19 @@ const LoginForm = ({ buttonText, onSubmit }: Props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
+    <Form onSubmit={handleSubmit}>
+      <FormGroup>
         <label htmlFor="username">Username</label>
-        <input id="username" type="text" />
-      </div>
-      <div>
+        <Input id="username" type="text" />
+      </FormGroup>
+      <FormGroup>
         <label htmlFor="password">Password</label>
-        <input id="password" type="password" />
-      </div>
+        <Input id="password" type="password" />
+      </FormGroup>
       <div>
-        <button type="submit">{buttonText}</button>
+        <Button variant={variant} type="submit">{buttonText}</Button>
       </div>
-    </form>
+    </Form>
   );
 };
 
@@ -50,30 +110,38 @@ function App() {
   };
 
   return (
-    <div>
+    <AppStyled>
       <Logo width="80" height="80" />
       <h1>Bookshelf</h1>
-      <div>
-        <button onClick={() => setOpenModal('login')}>Login</button>
-      </div>
-      <div>
-        <button onClick={() => setOpenModal('register')}>Register</button>
-      </div>
-      <Dialog aria-label="Login form" isOpen={openModal === 'login'}>
+      <Content>
         <div>
-          <button onClick={() => setOpenModal('none')}>Close</button>
+          <Button onClick={() => setOpenModal('login')}>Login</Button>
         </div>
-        <h3>Login</h3>
-        <LoginForm onSubmit={login} buttonText="Login" />
-      </Dialog>
-      <Dialog aria-label="Register form" isOpen={openModal === 'register'}>
         <div>
-          <button onClick={() => setOpenModal('none')}>Close</button>
+          <Button variant="secondary" onClick={() => setOpenModal('register')}>Register</Button>
         </div>
-        <h3>Register</h3>
-        <LoginForm buttonText="Register" onSubmit={register} />
-      </Dialog>
-    </div>
+        <Dialog aria-label="Login form" isOpen={openModal === 'login'}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <CircleButton onClick={() => setOpenModal('none')}>
+              <VisuallyHidden>Close</VisuallyHidden>
+              <span aria-hidden>×</span>
+            </CircleButton>
+          </div>
+          <h3 style={{ textAlign: 'center', fontSize: '2em' }}>Login</h3>
+          <LoginForm onSubmit={login} buttonText="Login" />
+        </Dialog>
+        <Dialog aria-label="Register form" isOpen={openModal === 'register'}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <CircleButton onClick={() => setOpenModal('none')}>
+              <VisuallyHidden>Close</VisuallyHidden>
+              <span aria-hidden>×</span>
+            </CircleButton>
+          </div>
+          <h3 style={{ textAlign: 'center', fontSize: '2em' }}>Register</h3>
+          <LoginForm variant="secondary" buttonText="Register" onSubmit={register} />
+        </Dialog>
+      </Content>
+    </AppStyled>
   );
 }
 
