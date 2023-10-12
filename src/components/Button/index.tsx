@@ -1,6 +1,6 @@
 import styled from '@emotion/styled/macro';
 import { ReactNode } from 'react';
-import * as colors from 'styles';
+import * as colors from 'styles/colors';
 
 interface Props {
   type?: "submit" | "reset" | "button" | undefined;

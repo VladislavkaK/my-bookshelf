@@ -3,10 +3,11 @@ import 'bootstrap/dist/css/bootstrap-reboot.css';
 import React from 'react';
 import styled from '@emotion/styled/macro';
 import VisuallyHidden from '@reach/visually-hidden';
-import { Dialog } from '@reach/dialog';
+import { Dialog as ReachDialog } from '@reach/dialog';
 import Logo from 'components/Logo';
 import Button from 'components/Button';
-import * as colors from 'styles';
+import * as colors from 'styles/colors';
+import * as mq from 'styles/media-queries';
 
 type FormDataType = { username: string, password: string };
 
@@ -68,6 +69,18 @@ const CircleButton = styled.button({
   color: colors.text,
   border: `1px solid ${colors.gray10}`,
   cursor: 'pointer',
+});
+
+const Dialog = styled(ReachDialog)({
+  maxWidth: '450px',
+  borderRadius: '3px',
+  paddingBottom: '3.5em',
+  boxShadow: '0 10px 30px -5px rgba(0, 0, 0, 0.2)',
+  margin: '20vh auto',
+  [mq.small]:{
+    width: '100%',
+    margin: '10vh auto'
+  } 
 });
 
 const LoginForm = ({ variant, buttonText, onSubmit }: Props) => {
