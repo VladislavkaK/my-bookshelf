@@ -1,7 +1,7 @@
 import '@reach/dialog/styles.css';
 import 'bootstrap/dist/css/bootstrap-reboot.css';
 import React from 'react';
-import styled from '@emotion/styled';
+import styled from '@emotion/styled/macro';
 import VisuallyHidden from '@reach/visually-hidden';
 import { Dialog } from '@reach/dialog';
 import Logo from 'components/Logo';
