@@ -6,6 +6,7 @@ import VisuallyHidden from '@reach/visually-hidden';
 import { Dialog as ReachDialog } from '@reach/dialog';
 import Logo from 'components/Logo';
 import Button from 'components/Button';
+import Spinner from 'components/Spinner';
 import * as colors from 'styles/colors';
 import * as mq from 'styles/media-queries';
 
@@ -106,6 +107,7 @@ const LoginForm = ({ variant, buttonText, onSubmit }: Props) => {
       </FormGroup>
       <div>
         <Button variant={variant} type="submit">{buttonText}</Button>
+        <Spinner />
       </div>
     </Form>
   );
